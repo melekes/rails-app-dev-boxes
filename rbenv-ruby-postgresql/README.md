@@ -54,6 +54,49 @@ host $ vagrant ssh
 host $ cd /vagrant/<project_name>
 ```
 
+## Setup Ruby on Rails
+
+### I am starting from scratch
+
+Install `rails` gem by running `gem install rails`.
+
+```
+host $ cd /vagrant/
+host $ rails new <project_name>
+host $ cd <project_name>
+```
+
+### I have an existing app
+
+```
+host $ cd /vagrant/<project_name>
+host $ bundle install
+```
+
+### Postgresql DB config
+
+Your `config/database.yml` should look like:
+
+```
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: <project_name>_development
+  pool: 5
+  username: postgres
+  password:
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: <project_name>_test
+  pool: 5
+  username: postgres
+  password:
+```
+
+Read more at [Getting Started with Rails](http://guides.rubyonrails.org/getting_started.html)
+
 ## Recommended Workflow
 
 The recommended workflow is
