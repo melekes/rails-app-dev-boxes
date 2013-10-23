@@ -1,0 +1,6 @@
+site :opscode
+
+cookbook 'apt', '~> 2.2.1'
+cookbook 'postgresql', '~> 3.1.0'
+cookbook 'rvm', github: 'fnichol/chef-rvm'
+cookbook 'imagemagick'

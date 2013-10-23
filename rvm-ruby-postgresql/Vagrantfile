@@ -1,0 +1,64 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu-server-12042-x64-vbox4210-nocm"
+  config.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-12042-x64-vbox4210-nocm.box"
+
+  # config.vm.provider "virtualbox" do |v|
+  #   v.customize ["modifyvm", :id, "--memory", 1024]
+  # end
+
+  config.ssh.forward_agent = true
+
+  config.vm.network :forwarded_port, guest: 3000, host: 3000 # rails s
+
+  # uncomment this if you want to use NFS
+  # config.vm.network :private_network, ip: '10.11.12.18'
+  # config.vm.synced_folder "./<project_name>", "/<project_name>", nfs: true
+
+  # plugins
+  config.berkshelf.enabled = true
+  config.omnibus.chef_version = :latest
+
+  config.vm.provision :chef_solo do |chef|
+    chef.add_recipe 'apt'
+
+    chef.add_recipe 'rvm::user'
+    chef.add_recipe 'rvm::vagrant'
+
+    chef.add_recipe 'postgresql::server'
+
+    chef.add_recipe 'postgresql::client'
+    chef.add_recipe 'imagemagick::devel'
+
+    chef.json = {
+      :postgresql => {
+        :password => {
+          :postgres => "password"
+        },
+        :pg_hba => [
+          { :type => 'local', :db => 'all', :user => 'all', :addr => nil, :method => 'trust' },
+          { :type => 'local', :db => 'all', :user => 'postgres', :addr => nil, :method => 'trust' },
+          { :type => 'host', :db => 'all', :user => 'all', :addr => '127.0.0.1/32', :method => 'trust' }
+        ]
+      },
+      :rvm      => {
+        :user_installs => [
+          {
+            :user   => "vagrant",
+            :rubies => [
+              "2.0.0-p247"
+            ],
+            :default_ruby => "2.0.0-p247",
+            :global_gems => [{ :name => 'bundler'}]
+          }
+        ],
+        :vagrant => {
+          :system_chef_solo => '/opt/chef/bin/chef-solo',
+          :system_chef_client => '/opt/chef/bin/chef-client'
+        }
+      }
+    }
+  end
+end
