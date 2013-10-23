@@ -46,6 +46,8 @@ If the base box is not present that command fetches it first. After the installa
 Clone the source repo (make sure you are inside the
 <project_name>-dev-box folder).
 
+It is better to add <project_name> to .gitignore.
+
 ```
 host $ git clone
 host $ vagrant ssh
@@ -98,3 +100,4 @@ You can use NFS to sync source files. To do this:
 
 1. [Install NFS](https://coderwall.com/p/uaohzg)
 2. Uncomment lines in Vagrantfile
+
