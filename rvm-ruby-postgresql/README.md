@@ -5,7 +5,7 @@
 * [VirtualBox](https://www.virtualbox.org)
 
 * [Vagrant](http://vagrantup.com)
-    >= 1.1.2 required
+    \>= 1.1.2 required
 
 * [vagrant-berkshelf](https://github.com/riotgames/vagrant-berkshelf)
 
