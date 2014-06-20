@@ -12,6 +12,7 @@
   ```
   host $ vagrant plugin install vagrant-berkshelf
   ```
+if not installed on the Mac, see [here](https://github.com/mitchellh/vagrant/issues/2402#issuecomment-27547824)
 
 * [vagrant-vbguest](https://github.com/dotless-de/vagrant-vbguest)
 
